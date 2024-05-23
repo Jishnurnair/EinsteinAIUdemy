@@ -8,12 +8,13 @@ public class ZipCodeName {
         
         Http h = new Http();
         HttpRequest req = new HttpRequest();
-        req.setEndpoint('https://api.zipcodestack.com/v1/search?codes=' + zipCodeToFind );
+        req.setEndpoint('https://api.zipcodestack.com/v1/search?codes=' + zipCodeToFind + '&country=us' );
         req.setMethod('GET');
-        req.setHeader('apikey', 'YOUR_API_KEY');
+        req.setHeader('apikey', Label.ZipCodeKey);
         
         // Send the request, and return a response
         HttpResponse res = h.send(req);
+        system.debug('****Res=>'+res.getBody());
         Map<String, Object> responseMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
         Map<String, Object> resultMap = (Map<String, Object>)responseMap.get('results');
         List<Object> zipData = (List<Object>) resultMap.get(String.valueOf(zipCodeToFind));
